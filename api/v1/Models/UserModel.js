@@ -1,23 +1,37 @@
-const db = require("../../../db");
-const { getCurrentTimeFromStamp } = require('../../../helpers/helper')
+const BaseModel = require("./BaseModel");
 
-class UserModel {
-  constructor(...data) {
-    this.data = data;
-  }
-
-  static createUser = (data) => {
-      console.log(getCurrentTimeFromStamp(data.day))
-    try {
-      db.query('INSERT INTO users( `name`, `surname`, `bird_day`, `email`, `password`, `gender` ) VALUES (?,?,?,?,?,?)',
-         [ data.name, data.surname, data.day, data.email, data.pass, data.gender]),
-          (error, results) => {
-            if (error) return res.json({error: error})
-          }
-    }catch (e) {
-      return e.message;
+class UserModel extends BaseModel {
+    constructor(...data) {
+        super();
+        this.data = data;
     }
-  }
+
+    static createUser(data) {
+        return new Promise((resolve, reject) => {
+            BaseModel.insert('users', data).execute('User has been registered successfully!')
+                .then((res) => {
+                    resolve(res)
+                })
+                .catch((e) => {
+                    reject(e);
+                })
+        })
+    }
+
+    static selectUser(data) {
+        return new Promise((resolve, reject) => {
+            UserModel.select('users')
+                .where('email', "=", data.email)
+                .execute('Login Success!')
+
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((e) => {
+                    reject(e)
+                })
+        })
+    }
 }
 
 module.exports = UserModel;

@@ -1,13 +1,15 @@
 module.exports = {
   response(success, data, statusCode) {
-    return [
-      {
+    return {
         success,
         data
-      },
-      statusCode
-    ]
+      }
   }
+}
+
+module.exports.renameProperty = (obj, fromKey, toKey) => {
+  obj[toKey] = obj[fromKey];
+  delete obj[fromKey];
 }
 
 module.exports.getCurrentTimeFromStamp = function(timestamp) {

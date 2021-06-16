@@ -1,5 +1,5 @@
 const UserController = require("../api/v1/Controllers/UserController");
-const isValidRegisterRequest = require('../api/v1/Requests/authRequests');
+const { isValidRegisterRequest , isValidLoginRequest } = require('../api/v1/Requests/authRequests');
 
 const routes = [
   {
@@ -9,6 +9,13 @@ const routes = [
     action: UserController.register,
     request: [ isValidRegisterRequest ],
     // middlewares: []
+  },
+  {
+    prefix: 'auth',
+    path: '/login',
+    method: 'post',
+    action: UserController.login,
+    request: [ isValidLoginRequest ],
   },
 ];
 
