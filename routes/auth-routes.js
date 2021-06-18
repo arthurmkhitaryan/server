@@ -17,6 +17,12 @@ const routes = [
     action: UserController.login,
     request: [ isValidLoginRequest ],
   },
+  {
+    prefix: 'auth',
+    path: '/me',
+    method: 'get',
+    action: UserController.me,
+  }
 ];
 
 module.exports = routes;

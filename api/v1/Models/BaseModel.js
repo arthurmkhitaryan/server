@@ -42,13 +42,14 @@ class BaseModel {
         if (err) {
           reject(err);
         }
-        if (!data.length){
+      console.log(data, 'jedguwgedu')
+        if (!data?.length){
           resolve(data, { message: executeMessage, user: [data[0]] });
         }else{
           resolve(data, { message: executeMessage });
         }
       });
-    })
+    });
   }
 }
 

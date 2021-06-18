@@ -23,7 +23,6 @@ class UserModel extends BaseModel {
             UserModel.select('users')
                 .where('email', "=", data.email)
                 .execute('Login Success!')
-
                 .then((res) => {
                     resolve(res);
                 })
