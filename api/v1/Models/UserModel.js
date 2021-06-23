@@ -8,7 +8,7 @@ class UserModel extends BaseModel {
 
     static createUser(data) {
         return new Promise((resolve, reject) => {
-            BaseModel.insert('users', data).execute('User has been registered successfully!')
+           return  BaseModel.insert('users', data).execute('User has been registered successfully!')
                 .then((res) => {
                     resolve(res)
                 })
@@ -20,15 +20,15 @@ class UserModel extends BaseModel {
 
     static selectUser(data) {
         return new Promise((resolve, reject) => {
-            UserModel.select('users')
-                .where('email', "=", data.email)
-                .execute('Login Success!')
-                .then((res) => {
-                    resolve(res);
-                })
-                .catch((e) => {
-                    reject(e)
-                })
+            BaseModel.select('users')
+            .where('email', "=", data.email)
+            .execute('Login Success!')
+            .then((res) => {
+                resolve(res);
+            })
+            .catch((e) => {
+                reject(e)
+            })
         })
     }
 }

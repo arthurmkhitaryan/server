@@ -10,17 +10,25 @@ module.exports.register = function (req, res) {
     }
 
     AuthService.register(req.body)
-    .then((resp) => {
-        res.status(200).json(response(true, resp));
-    })
-    .catch((err) => {
-        res.status(400).json(response(false, err));
-    })
+        .then((resp) => {
+            res.status(200).json(response(true, resp));
+        })
+        .catch((err) => {
+            res.status(400).json(response(false, err));
+        })
 }
 
 module.exports.me = function (req, res) {
-    // jwt.verify(req)
-     res.status(200).send('dsadasdasd')
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        if (!token) {
+            res.status(401).json(response(false, {message: "Auth Error"}));
+        }
+        req.user = jwt.verify(token, process.env.TOKEN_SECRET);
+        res.status(200).json(response(true, { user: req.user }));
+    } catch (e) {
+        res.status(401).json(response(false, {message: "Auth Error"}));
+    }
 
 }
 
@@ -31,11 +39,10 @@ module.exports.login = function (req, res) {
     }
 
     AuthService.login(req.body)
-    .then((resp) => {
-        // console.log(resp)
-        res.status(200).json(response(true, resp))
-    })
-    .catch((err) => {
-        res.status(404).json(response(false, err))
-    })
+        .then((resp) => {
+            res.status(200).json(response(true, resp))
+        })
+        .catch((err) => {
+            res.status(404).json(response(false, err))
+        })
 }

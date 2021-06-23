@@ -1,56 +1,63 @@
 const db = require('../../../db');
-const { renameProperty } = require('../../../helpers/helper');
+
+const {loginError} = require('../../../constants/error-messages/auth');
 
 class BaseModel {
-  constructor() {
-    this.sql = '';
-  }
+    constructor() {
+        this.sql = '';
+    }
 
-  static insert (tableName, dataObj) {
-      renameProperty(dataObj, 'day', 'bird_day');
-      renameProperty(dataObj, 'pass', 'password');
-      let cols = '';
-      let values = '';
-      for (let key in dataObj) {
-        if (dataObj.hasOwnProperty(key)){
-          if (key !== Object.keys(dataObj)[Object.keys(dataObj).length-1]){
-            cols += `\`${key}\`, `;
-            values += `'${dataObj[key]}', `;
-          }else {
-            cols += `\`${key}\``;
-            values += `'${dataObj[key]}'`;
-          }
+    static insert(tableName, dataObj) {
+        let cols = '';
+        let values = '';
+        for (let key in dataObj) {
+            if (dataObj.hasOwnProperty(key)) {
+                if (key !== Object.keys(dataObj)[Object.keys(dataObj).length - 1]) {
+                    cols += `\`${key}\`, `;
+                    values += `'${dataObj[key]}', `;
+                } else {
+                    cols += `\`${key}\``;
+                    values += `'${dataObj[key]}'`;
+                }
+            }
         }
-      }
-      this.sql = `INSERT INTO ${tableName}(${cols}) VALUES(${values});`;
-      return this;
-  }
+        this.sql = `INSERT INTO ${tableName}(${cols}) VALUES(${values});`;
+        return this;
+    }
 
-  static select(tableName, col = '*') {
-      this.sql = `SELECT ${col} FROM ${tableName}`
-      return this;
-  }
+    static select(tableName, col = '*') {
+        this.sql = `SELECT ${col} FROM ${tableName}`
+        return this;
+    }
 
-  static where(field, cond, newField) {
-      this.sql += ` WHERE ${field} ${cond} '${newField}'`
-      return this;
-  }
+    static where(field, cond, newField) {
+        this.sql += ` WHERE ${field} ${cond} '${newField}'`
+        return this;
+    }
 
-  static execute(executeMessage) {
-    return new Promise((resolve, reject) => {
-      db.query(this.sql, (err, data) => {
-        if (err) {
-          reject(err);
-        }
-      console.log(data, 'jedguwgedu')
-        if (!data?.length){
-          resolve(data, { message: executeMessage, user: [data[0]] });
-        }else{
-          resolve(data, { message: executeMessage });
-        }
-      });
-    });
-  }
+    static execute(executeMessage) {
+        return new Promise((resolve, reject) => {
+            db.query(this.sql, (err, data) => {
+                if (err.sqlState === '23000') reject({
+                    errors: [
+                        {
+                            "msg": "This email is already registered!",
+                            "param": "email",
+                        }
+                    ]
+                });
+                if (err) reject(err);
+
+                switch (true) {
+                    case Array.isArray(data):
+                        resolve(data, {message: executeMessage, data});
+                        break;
+                    default:
+                        resolve(data, {message: executeMessage});
+                }
+            });
+        });
+    }
 }
 
 module.exports = BaseModel;

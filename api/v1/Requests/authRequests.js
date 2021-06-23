@@ -8,15 +8,15 @@ const isValidRegisterRequest = [
         .isLength({ min: 2 })
         .withMessage('Email is required.')
         .isEmail().withMessage('Please provide a valid email address'),
-    check('pass')
+    check('password')
         .isLength({ min: 6 })
         .withMessage('Password length minimum 6 symbols.')
-        .not().matches('re_pass')
+        .not().matches('confirm_password')
         .withMessage('Passwords must match.'),
-    check('re_pass')
+    check('confirm_password')
         .isLength({ min: 6 })
         .withMessage('Confirm password minimum 6 symbols.')
-        .not().matches('pass')
+        .not().matches('password')
         .withMessage('Passwords must match.')
 ];
 
@@ -24,7 +24,7 @@ const isValidLoginRequest = [
     check('email', 'Incorrect Email')
         .isEmail()
         .isLength({min: 2}),
-    check('pass', 'Incorrect Password')
+    check('password', 'Incorrect Password')
         .isLength({min: 6})
 ];
 

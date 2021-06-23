@@ -1,28 +1,29 @@
 const UserController = require("../api/v1/Controllers/UserController");
-const { isValidRegisterRequest , isValidLoginRequest } = require('../api/v1/Requests/authRequests');
+const {isValidRegisterRequest, isValidLoginRequest} = require('../api/v1/Requests/authRequests');
+const {LoginRoute, MeRoute, RegisterRoute} = require('../constants/routes/routes')
 
 const routes = [
-  {
-    prefix: 'auth',
-    path: '/register',
-    method: 'post',
-    action: UserController.register,
-    request: [ isValidRegisterRequest ],
-    // middlewares: []
-  },
-  {
-    prefix: 'auth',
-    path: '/login',
-    method: 'post',
-    action: UserController.login,
-    request: [ isValidLoginRequest ],
-  },
-  {
-    prefix: 'auth',
-    path: '/me',
-    method: 'get',
-    action: UserController.me,
-  }
+    {
+        prefix: 'auth',
+        path: RegisterRoute,
+        method: 'post',
+        action: UserController.register,
+        request: [isValidRegisterRequest],
+        // middlewares: []
+    },
+    {
+        prefix: 'auth',
+        path: LoginRoute,
+        method: 'post',
+        action: UserController.login,
+        request: [isValidLoginRequest],
+    },
+    {
+        prefix: 'auth',
+        path: MeRoute,
+        method: 'get',
+        action: UserController.me,
+    }
 ];
 
 module.exports = routes;
