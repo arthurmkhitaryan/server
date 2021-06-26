@@ -20,12 +20,4 @@ const isValidRegisterRequest = [
         .withMessage('Passwords must match.')
 ];
 
-const isValidLoginRequest = [
-    check('email', 'Incorrect Email')
-        .isEmail()
-        .isLength({min: 2}),
-    check('password', 'Incorrect Password')
-        .isLength({min: 6})
-];
-
-module.exports = {isValidRegisterRequest, isValidLoginRequest};
+module.exports = { isValidRegisterRequest };

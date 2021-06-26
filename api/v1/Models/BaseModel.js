@@ -38,15 +38,17 @@ class BaseModel {
     static execute(executeMessage) {
         return new Promise((resolve, reject) => {
             db.query(this.sql, (err, data) => {
-                if (err.sqlState === '23000') reject({
-                    errors: [
-                        {
-                            "msg": "This email is already registered!",
-                            "param": "email",
-                        }
-                    ]
-                });
-                if (err) reject(err);
+                if (err) {
+                    if (err.sqlState === '23000') reject({
+                        errors: [
+                            {
+                                "msg": "This email is already registered!",
+                                "param": "email",
+                            }
+                        ]
+                    });
+                    reject(err);
+                }
 
                 switch (true) {
                     case Array.isArray(data):

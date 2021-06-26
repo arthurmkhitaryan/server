@@ -21,23 +21,14 @@ module.exports.register = function (req, res) {
 module.exports.me = function (req, res) {
     try {
         const token = req.headers.authorization.split(' ')[1];
-        if (!token) {
-            res.status(401).json(response(false, {message: "Auth Error"}));
-        }
         req.user = jwt.verify(token, process.env.TOKEN_SECRET);
         res.status(200).json(response(true, { user: req.user }));
-    } catch (e) {
-        res.status(401).json(response(false, {message: "Auth Error"}));
+    } catch {
+        res.status(401).json(response(false, { message: "Auth Error" }));
     }
-
 }
 
 module.exports.login = function (req, res) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        res.status(422).json(response(false, errors));
-    }
-
     AuthService.login(req.body)
         .then((resp) => {
             res.status(200).json(response(true, resp))

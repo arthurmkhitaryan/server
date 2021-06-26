@@ -1,5 +1,5 @@
 module.exports = {
-  response(success, data, statusCode) {
+  response(success, data) {
     return {
         success,
         data
