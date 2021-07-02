@@ -1,7 +1,5 @@
 const db = require('../../../db');
 
-const {loginError} = require('../../../constants/error-messages/auth');
-
 class BaseModel {
     constructor() {
         this.sql = '';

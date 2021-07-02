@@ -1,9 +1,11 @@
 const express = require('express');
 const route = express.Router();
 const authRoutes = require('./auth-routes');
+const profileRoutes = require('./profile-routes');
 
 const routes = [
-    ...authRoutes
+    ...authRoutes,
+    ...profileRoutes
 ];
 
 routes.forEach((eachRoute) => {

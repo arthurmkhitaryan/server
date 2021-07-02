@@ -1,5 +1,5 @@
 const UserController = require("../api/v1/Controllers/UserController");
-const {isValidRegisterRequest, isValidLoginRequest} = require('../api/v1/Requests/authRequests');
+const {isValidRegisterRequest} = require('../api/v1/Requests/authRequests');
 const {LoginRoute, MeRoute, RegisterRoute} = require('../constants/routes/routes');
 const AuthMiddleware = require('../api/v1/Middleware/auth-middleware');
 

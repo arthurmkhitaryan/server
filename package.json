@@ -9,7 +9,9 @@
   "author": "Arthur Mkhitaryan",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "file-saver": "^2.0.5",
+    "nodemon": "^2.0.7",
+    "puppeteer": "^10.1.0"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -19,6 +21,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.11.1",
+    "html-pdf-node": "^1.0.7",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5"
   }
