@@ -23,6 +23,7 @@
     "express-validator": "^6.11.1",
     "html-pdf-node": "^1.0.7",
     "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.2.5"
+    "mysql2": "^2.2.5",
+    "pdf-creator-node": "^2.2.2"
   }
 }
