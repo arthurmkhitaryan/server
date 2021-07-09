@@ -2,5 +2,6 @@ module.exports = {
     RegisterRoute: "/register",
     LoginRoute: '/login',
     MeRoute: '/me',
-    CVRoute: '/cv'
+    CVRoute: '/cv',
+    MyCVs: '/myCvs'
 }
